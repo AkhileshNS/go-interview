@@ -8,9 +8,8 @@ func myFunction(flightTime int, movieTimes []int) bool {
 	for _, movieTime := range movieTimes {
 		if _, ok := diff[flightTime-movieTime]; ok {
 			return true
-		} else {
-			diff[movieTime] = true
 		}
+		diff[movieTime] = true
 	}
 
 	return false
