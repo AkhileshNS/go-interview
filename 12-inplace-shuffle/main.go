@@ -1,17 +1,30 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
-func myFunction(arg string) string {
+func getRand(min int, max int) int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(max-min+1) + min
+}
 
-	// Write the body of your function here
+func swap(arr []int, i, j int) {
+	arr[i], arr[j] = arr[j], arr[i]
+}
 
-	return "running with " + arg
+func shuffleInPlace(arr []int) []int {
+	for i := 0; i < len(arr)-1; i++ {
+		pos := getRand(i, len(arr)-1)
+		swap(arr, i, pos)
+	}
+
+	return arr
 }
 
 func main() {
-
-	// Run your function through some test cases here.
-	// Remember: debuggin is half the battle!
-	fmt.Println(myFunction("test input"))
+	arr := []int{1, 5, 7, 9, 2, 8}
+	fmt.Println(shuffleInPlace(arr))
 }
