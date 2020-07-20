@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "add": "node scripts/add",
+    "start": "node scripts/run"
+  }
+}
