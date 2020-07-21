@@ -36,10 +36,10 @@ func find2ndLargest(tree *node) int {
 	if tree.right == nil {
 		start, _ := get2Largest(tree.left)
 		return start
-	} else {
-		_, follower := get2Largest(tree)
-		return follower
 	}
+
+	_, follower := get2Largest(tree)
+	return follower
 }
 
 func main() {
