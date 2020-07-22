@@ -1,20 +1,14 @@
+package main
 
-    package main
+import (
+	"fmt"
+	"math"
+)
 
-    import "fmt"
-    
-    func myFunction(arg string) string {
-    
-        // Write the body of your function here
-        
-    
-        return "running with " + arg
-    }
-    
-    func main() {
-    
-        // Run your function through some test cases here.
-        // Remember: debuggin is half the battle!
-        fmt.Println(myFunction("test input"))
-    }    
-    
+func genFib(n int) float64 {
+	return math.Round(math.Pow(math.Phi, float64(n)) / math.Sqrt(5))
+}
+
+func main() {
+	fmt.Println(genFib(9))
+}
