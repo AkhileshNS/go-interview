@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
-	"sort"
 )
 
 type cake struct {
@@ -11,36 +9,38 @@ type cake struct {
 	v int
 }
 
-func (c *cake) valByWeight() float64 {
-	return float64(c.v) / float64(c.w)
+func max(val1 int, val2 int) int {
+	if val1 > val2 {
+		return val1
+	}
+	return val2
 }
 
-type byValWeight []cake
-
-func (a byValWeight) Len() int           { return len(a) }
-func (a byValWeight) Less(i, j int) bool { return a[i].valByWeight() > a[j].valByWeight() }
-func (a byValWeight) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-
 func maxDuffelBag(cakes []cake, capacity int) int {
-	sortedCakes := make([]cake, len(cakes))
-	copy(sortedCakes, cakes)
-	sort.Sort(byValWeight(sortedCakes))
+	maxValues := []int{0}
 
-	fmt.Println(sortedCakes)
+	for i := 1; i <= capacity; i++ {
+		maxValue := 0
 
-	remaining := capacity
-	maxValue := 0
+		for _, cake := range cakes {
+			currMax := 0
 
-	for j := range sortedCakes {
-		if remaining >= sortedCakes[j].w {
-			count := int(math.Floor(float64(remaining) / float64(sortedCakes[j].w)))
-			maxValue += (count * sortedCakes[j].v)
-			remaining -= (count * sortedCakes[j].w)
-			fmt.Println(maxValue, remaining, count)
+			if cake.w <= i {
+				currMax += cake.v
+
+				remainder := i - cake.w
+				if remainder >= 0 && remainder < len(maxValues) {
+					currMax += maxValues[remainder]
+				}
+			}
+
+			maxValue = max(maxValue, currMax)
 		}
+
+		maxValues = append(maxValues, maxValue)
 	}
 
-	return maxValue
+	return maxValues[capacity]
 }
 
 func main() {
