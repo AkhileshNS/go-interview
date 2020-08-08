@@ -64,16 +64,20 @@ func getCoins(coins []int, total int) []string {
 func getCoins(coins []int, total int) int {
 	// Each index in ways represents the amount to reach
 	// The value at each index represents the number of ways to reach (index) amount
-	ways := []int{}
-	for i := 0; i <= total; i++ {
+	ways := []int{0}
+	for i := 0; i < total; i++ {
 		ways = append(ways, 0)
 	}
-	ways[0] = 1
 
 	for _, coin := range coins {
-		for amount := coin; amount <= total; amount++ {
-			remainder := amount - coin
-			ways[amount] += ways[remainder]
+		for i := coin; i <= total; i++ {
+			remainder := i - coin
+
+			if remainder == 0 {
+				ways[i]++
+			} else if remainder > 0 {
+				ways[i] += ways[remainder]
+			}
 		}
 	}
 
@@ -81,7 +85,7 @@ func getCoins(coins []int, total int) int {
 }
 
 func main() {
-	denominations := []int{2, 3, 4}
-	total := 7
+	denominations := []int{1, 3, 5}
+	total := 5
 	fmt.Println(getCoins(denominations, total))
 }
