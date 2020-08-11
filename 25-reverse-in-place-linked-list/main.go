@@ -16,19 +16,28 @@ func printList(head *node) {
 }
 
 func reverse(head *node) *node {
+	if head == nil {
+		return head
+	}
+
+	if head.next == nil {
+		return head
+	}
+
+	if head.next.next == nil {
+		pointer := head
+		pointer = pointer.next
+		pointer.next = head
+		head.next = nil
+		return pointer
+	}
+
 	leader := head
 	pointer := head
 	follower := head
 
 	leader = leader.next.next
 	pointer = pointer.next
-
-	pointer.next = follower
-	follower.next = nil
-
-	follower = pointer
-	pointer = leader
-	leader = leader.next
 
 	for leader != nil {
 		pointer.next = follower
@@ -38,6 +47,7 @@ func reverse(head *node) *node {
 	}
 
 	pointer.next = follower
+	head.next = nil
 
 	return pointer
 }
